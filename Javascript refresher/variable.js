@@ -1,4 +1,4 @@
-var name = 'max';
+let  name = 'max';
 var age = 20;
 var hobbies = true;
 function summarizeUser(name, age, hobbies) {
