@@ -1,27 +1,26 @@
 
-const http = require('http');
-const express=require('express');
+const express = require('express');
 
-const app=express();
-app.use((req,res,next)=>{
+const bodyParser = require('body-parser');
 
-console.log("in the middleware");
-res.send('<h1>Hello from Express</>');
-next();
-})
+const app = express();
 
 
-app.use((req,res,next)=>{
+const adminRoutes = require('./routes/admin');
+
+const shopRoutes = require('./routes/shop');
 
 
-console.log("in the next middleware");
-res.send('<h1>Hello from Express</>');
-})
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// Create server
-const server = http.createServer(app);
+app.use('/admin', adminRoutes);
 
-// Start server
-server.listen(3000, () => {
-    console.log('Server is running at http://localhost:3000');
+app.use(shopRoutes);
+
+
+app.use((req, res, next) => {
+    res.status(404).send('<h1>Page not found</h1>');
 });
+
+
+app.listen(3000);
